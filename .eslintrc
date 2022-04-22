@@ -19,18 +19,19 @@
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "rules": {
-    "prettier/prettier": [2, { "singleQuote": true }],
-    "react/jsx-filename-extension": [2, { "extensions": [".jsx", ".tsx"] }],
+    "prettier/prettier": ["error", { "singleQuote": true }],
+    "react/jsx-filename-extension": ["error", { "extensions": [".jsx", ".tsx"] }],
     "react/prop-types": "off",
     "react/require-default-props": "off",
     "react/react-in-jsx-scope": "off",
     "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
     "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
-    "react/function-component-definition": 0,
+    "react/function-component-definition": "off",
     "import/extensions": [
       2,
       { "extensions": [".js", ".jsx", ".json", ".ts", ".tsx", "css", "scss"] }
     ],
+    "import/prefer-default-export": "off",
     "import/order": [
       "error",
       {
@@ -44,7 +45,7 @@
     ],
     "no-param-reassign": ["error", { "props": false }],
     "no-use-before-define": "off",
-    "jsx-a11y/anchor-is-valid": 0
+    "jsx-a11y/anchor-is-valid": "off"
   },
   "settings": {
     "import/resolver": {

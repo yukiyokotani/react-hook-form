@@ -1,24 +1,34 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
-import { Button } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Grid,
+  Typography
+} from '@mui/material';
 import { useCallback } from 'react';
 import { FieldErrors, useForm, useFormState } from 'react-hook-form';
 
-import MuiAutocomplete from './components/MuiAutoCompleteField';
-import MuiNumberField from './components/MuiNumberField';
-import MuiTextField from './components/MuiTextField';
-import top100Films from './components/top100Films';
+import { MuiAutocomplete } from './components/MuiAutoCompleteField';
+import { MuiDatePicker } from './components/MuiDatePicker';
+import { MuiNumberField } from './components/MuiNumberField';
+import { MuiTextField } from './components/MuiTextField';
+import { top100Films } from './components/top100Films';
 
 type FormData = {
   name: string;
   assets: number;
   movie: string;
+  birthday: string;
 };
 
 const MaterialForm = () => {
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
-      name: ''
+      name: '',
+      birthday: new Date().toISOString()
     },
     // onSubmit modeの場合、formStateのisValidは適切な値とならないことに注意
     mode: 'onSubmit'
@@ -37,63 +47,115 @@ const MaterialForm = () => {
   }, []);
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <MuiTextField<FormData>
-          name='name'
-          control={control}
-          rules={{
-            required: '必須項目です。',
-            maxLength: { value: 5, message: '5文字以内で入力してください。' }
-          }}
-          config={{
-            displayErrorMessage: true
-          }}
-          muiProps={{
-            fullWidth: true
-          }}
-        />
-        <MuiNumberField<FormData>
-          name='assets'
-          control={control}
-          rules={{
-            required: '必須項目です。',
-            max: {
-              value: 10000,
-              message: '10,000以下の数値を入力してください。'
-            }
-          }}
-          config={{
-            displayErrorMessage: true,
-            thousandSeparator: true
-          }}
-          muiProps={{
-            fullWidth: true
-          }}
-        />
-        <MuiAutocomplete<FormData>
-          name='movie'
-          control={control}
-          rules={{
-            required: '必須項目です。'
-          }}
-          config={{
-            displayErrorMessage: true
-          }}
-          muiProps={{
-            disablePortal: true,
-            options: top100Films
-          }}
-        />
-        <Button variant='contained' type='submit'>
-          送信
-        </Button>
-      </form>
-      <div>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Card>
+          <form onSubmit={handleSubmit(onSubmit, onError)}>
+            <CardContent>
+              <Typography gutterBottom variant='h5' component='div'>
+                サンプルフォーム
+              </Typography>
+              <Typography gutterBottom variant='body1' component='div'>
+                「送信」ボタンを押すとフォームオブジェクトがconsoleに出力されます。
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={6} lg={4}>
+                  <MuiTextField<FormData>
+                    name='name'
+                    control={control}
+                    rules={{
+                      required: '必須項目です。',
+                      maxLength: {
+                        value: 5,
+                        message: '5文字以内で入力してください。'
+                      }
+                    }}
+                    config={{
+                      displayErrorMessage: true
+                    }}
+                    muiProps={{
+                      label: '名前',
+                      fullWidth: true
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6} lg={4}>
+                  <MuiNumberField<FormData>
+                    name='assets'
+                    control={control}
+                    rules={{
+                      required: '必須項目です。',
+                      max: {
+                        value: 100000,
+                        message: '100,000以下の数値を入力してください。'
+                      }
+                    }}
+                    config={{
+                      displayErrorMessage: true,
+                      thousandSeparator: true,
+                      suffix: '円'
+                    }}
+                    muiProps={{
+                      label: '貯蓄額',
+                      fullWidth: true
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6} lg={4}>
+                  <MuiAutocomplete<FormData>
+                    name='movie'
+                    control={control}
+                    rules={{
+                      required: '必須項目です。'
+                    }}
+                    config={{
+                      displayErrorMessage: true,
+                      textFieldProps: {
+                        label: '好きな映画'
+                      }
+                    }}
+                    muiProps={{
+                      disablePortal: true,
+                      options: top100Films
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6} lg={4}>
+                  <MuiDatePicker<FormData>
+                    name='birthday'
+                    control={control}
+                    rules={{
+                      required: '必須項目です。'
+                    }}
+                    config={{
+                      displayErrorMessage: true,
+                      textFieldProps: {
+                        fullWidth: true
+                      }
+                    }}
+                    muiProps={{
+                      disableFuture: true,
+                      label: '誕生日',
+                      openTo: 'day',
+                      views: ['year', 'month', 'day']
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </CardContent>
+            <CardActions sx={{ justifyContent: 'flex-end' }}>
+              <Button variant='contained' type='submit'>
+                送信
+              </Button>
+            </CardActions>
+          </form>
+        </Card>
+      </Grid>
+      <Grid item xs={12}>
         <p>isDirty: {String(isDirty)}</p>
         <p>isSubmitted: {String(isSubmitted)}</p>
-      </div>
-    </>
+      </Grid>
+    </Grid>
   );
 };
 

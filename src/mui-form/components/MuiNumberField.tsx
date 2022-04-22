@@ -13,8 +13,6 @@ import {
 import NumberFormat, { NumberFormatPropsBase } from 'react-number-format';
 
 type MuiNumberFieldConfig = {
-  label?: string;
-  id?: string;
   displayErrorMessage?: boolean;
   valueType?: 'STRING' | 'FLOAT' | 'FORMATTED_STRING';
 };
@@ -64,18 +62,17 @@ const NumberFormatCustom = forwardRef<
   );
 });
 
-const MuiNumberField: <T>(props: MuiNumberFieldProps<T>) => JSX.Element = (
-  props
-) => {
+export const MuiNumberField: <T>(
+  props: MuiNumberFieldProps<T>
+) => JSX.Element = (props) => {
   const { config, muiProps } = props;
   const { field, fieldState } = useController(props);
 
   return (
     <TextField
       {...muiProps}
-      id={config?.id}
-      label={config?.label}
-      inputRef={field.ref}
+      id={muiProps?.id}
+      label={muiProps?.label}
       name={field.name}
       value={field.value}
       error={!!fieldState.error}
@@ -92,5 +89,3 @@ const MuiNumberField: <T>(props: MuiNumberFieldProps<T>) => JSX.Element = (
     />
   );
 };
-
-export default MuiNumberField;

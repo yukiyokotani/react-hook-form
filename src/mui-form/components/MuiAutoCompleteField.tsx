@@ -1,5 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Autocomplete, AutocompleteProps, TextField } from '@mui/material';
+import {
+  Autocomplete,
+  AutocompleteProps,
+  BaseTextFieldProps,
+  TextField
+} from '@mui/material';
 import { useController, UseControllerProps } from 'react-hook-form';
 
 type AutocompleteOption = {
@@ -7,10 +12,9 @@ type AutocompleteOption = {
 };
 
 type MuiAutocompleteProps<T> = UseControllerProps<T> & {
-  config?: {
-    label?: string;
-    id?: string;
+  config?: BaseTextFieldProps & {
     displayErrorMessage?: boolean;
+    textFieldProps?: BaseTextFieldProps;
   };
   muiProps?: Omit<
     AutocompleteProps<AutocompleteOption, undefined, undefined, undefined>,
@@ -18,9 +22,9 @@ type MuiAutocompleteProps<T> = UseControllerProps<T> & {
   >;
 };
 
-const MuiAutocomplete: <T>(props: MuiAutocompleteProps<T>) => JSX.Element = (
-  props
-) => {
+export const MuiAutocomplete: <T>(
+  props: MuiAutocompleteProps<T>
+) => JSX.Element = (props) => {
   const { config, muiProps } = props;
   const { field, fieldState } = useController(props);
 
@@ -46,5 +50,3 @@ const MuiAutocomplete: <T>(props: MuiAutocompleteProps<T>) => JSX.Element = (
     />
   );
 };
-
-export default MuiAutocomplete;

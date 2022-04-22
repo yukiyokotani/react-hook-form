@@ -9,7 +9,7 @@ type MuiTextFieldProps<T> = UseControllerProps<T> & {
   muiProps?: BaseTextFieldProps;
 };
 
-const MuiTextField: <T>(props: MuiTextFieldProps<T>) => JSX.Element = (
+export const MuiTextField: <T>(props: MuiTextFieldProps<T>) => JSX.Element = (
   props
 ) => {
   const { config, muiProps } = props;
@@ -28,5 +28,3 @@ const MuiTextField: <T>(props: MuiTextFieldProps<T>) => JSX.Element = (
     />
   );
 };
-
-export default MuiTextField;
