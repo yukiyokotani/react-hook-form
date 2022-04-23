@@ -41,13 +41,13 @@ export const MuiAutocomplete: <T>(
       onBlur={field.onBlur}
       renderInput={(params) => (
         <TextField
-          {...params}
           {...textFieldProps}
           inputRef={field.ref}
           name={field.name}
           value={field.value}
           error={!!fieldState.error}
           helperText={config?.displayErrorMessage && fieldState.error?.message}
+          {...params}
         />
       )}
     />
