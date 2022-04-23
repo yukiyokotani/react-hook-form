@@ -41,6 +41,8 @@ export const MuiDatePicker: <T>(props: MuiDatePickerProps<T>) => JSX.Element = (
         field.onChange(date.toISOString());
       } else if (date !== null) {
         field.onChange(date);
+      } else {
+        field.onChange('');
       }
     },
     [field]
