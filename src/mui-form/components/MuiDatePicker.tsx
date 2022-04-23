@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { BaseTextFieldProps, TextField } from '@mui/material';
 import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
+import { useCallback } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
 
 type MuiDatePickerProps<T> = UseControllerProps<T> & {
@@ -23,11 +24,22 @@ export const MuiDatePicker: <T>(props: MuiDatePickerProps<T>) => JSX.Element = (
   const { datePickerProps, textFieldProps } = muiProps ?? {};
   const { field, fieldState } = useController(others);
 
+  const onChangeHandler = useCallback(
+    (date: unknown) => {
+      if (date instanceof Date) {
+        field.onChange(date.toISOString());
+      } else {
+        field.onChange(date);
+      }
+    },
+    [field]
+  );
+
   return (
     <DatePicker
       {...datePickerProps}
       value={field.value}
-      onChange={field.onChange}
+      onChange={onChangeHandler}
       renderInput={(params) => (
         <TextField
           {...textFieldProps}
@@ -35,7 +47,7 @@ export const MuiDatePicker: <T>(props: MuiDatePickerProps<T>) => JSX.Element = (
           inputRef={field.ref}
           error={!!fieldState.error}
           helperText={config?.displayErrorMessage && fieldState.error?.message}
-          onChange={field.onChange}
+          onChange={onChangeHandler}
           onBlur={field.onBlur}
           {...params}
         />
