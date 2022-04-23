@@ -12,7 +12,7 @@ import { useCallback } from 'react';
 import { FieldErrors, useForm, useFormState } from 'react-hook-form';
 
 import { MuiAutocomplete } from './components/MuiAutoCompleteField';
-import { MuiDatePicker } from './components/MuiDatePicker';
+import { isValidDate, MuiDatePicker } from './components/MuiDatePicker';
 import { MuiNumberField } from './components/MuiNumberField';
 import { MuiTextField } from './components/MuiTextField';
 import { top100Films } from './components/top100Films';
@@ -28,7 +28,7 @@ const MaterialForm = () => {
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
       name: '',
-      birthday: new Date().toISOString()
+      birthday: ''
     },
     // onSubmit modeの場合、formStateのisValidは適切な値とならないことに注意
     mode: 'onSubmit'
@@ -131,7 +131,9 @@ const MaterialForm = () => {
                     name='birthday'
                     control={control}
                     rules={{
-                      required: '必須項目です。'
+                      required: '必須項目です。',
+                      validate: (val) =>
+                        isValidDate(val) ? true : '無効な日付です。'
                     }}
                     config={{
                       displayErrorMessage: true
@@ -140,8 +142,7 @@ const MaterialForm = () => {
                       datePickerProps: {
                         disableFuture: true,
                         label: '誕生日',
-                        openTo: 'day',
-                        views: ['year', 'month', 'day']
+                        openTo: 'day'
                       },
                       textFieldProps: {
                         fullWidth: true
