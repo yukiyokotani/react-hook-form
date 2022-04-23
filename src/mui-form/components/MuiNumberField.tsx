@@ -13,17 +13,41 @@ import {
 import NumberFormat, { NumberFormatPropsBase } from 'react-number-format';
 
 type MuiNumberFieldConfig = {
+  /**
+   * Whether to display error messages below the input field.
+   * If `true`, message displays.
+   * @defaultValue `false`
+   */
   displayErrorMessage?: boolean;
-  valueType?: 'STRING' | 'FLOAT' | 'FORMATTED_STRING';
+  /**
+   * Type of value to be managed in the form.
+   * @exmaple
+   * If you input 1000,
+   * - FLOAT: `1000`
+   * - STRING: `'1000'`
+   * - FORMATTED_STRING: `'1,000'` (depends on your format setting.)
+   * @defaultValue `'FLOAT'`
+   */
+  valueType?: 'FLOAT' | 'STRING' | 'FORMATTED_STRING';
 };
 
 type MuiNumberFieldProps<T extends FieldValues> = UseControllerProps<T> & {
+  /** Additional settings */
   config?: NumberFormatPropsBase<unknown> & MuiNumberFieldConfig;
+  /** Settings for MUI elements */
   muiProps?: {
+    /**
+     * Settings for TextField inside MuiTextField
+     *
+     * API: {@link https://mui.com/material-ui/api/text-field/}
+     */
     textFieldProps?: BaseTextFieldProps;
   };
 };
 
+/**
+ * Input of react-number-format
+ */
 const NumberFormatCustom = forwardRef<
   HTMLInputElement,
   InputBaseComponentProps & MuiNumberFieldConfig
@@ -64,6 +88,38 @@ const NumberFormatCustom = forwardRef<
   );
 });
 
+/**
+ *  MUI TextField component linked to React Hook Form and react-number-format.
+ * @example
+ * ```
+ * type FormData = {
+ *   assets: number;
+ * };
+ *
+ * <MuiNumberField<FormData>
+ *   name='assets'
+ *   control={control}
+ *   rules={{
+ *     required: 'Enter your assets.',
+ *     max: {
+ *       value: 1000000,
+ *       message: 'Enter $1,000,000 or less.'
+ *     }
+ *   }}
+ *   config={{
+ *     displayErrorMessage: true,
+ *     thousandSeparator: true,
+ *     prefix: '$'
+ *   }}
+ *   muiProps={{
+ *     textFieldProps: {
+ *       label: 'Assets',
+ *       fullWidth: true
+ *     }
+ *   }}
+ * />
+ * ```
+ */
 export const MuiNumberField: <T>(
   props: MuiNumberFieldProps<T>
 ) => JSX.Element = (props) => {

@@ -11,7 +11,7 @@ import {
 import { useCallback } from 'react';
 import { FieldErrors, useForm, useFormState } from 'react-hook-form';
 
-import { MuiAutocomplete } from './components/MuiAutoCompleteField';
+import { MuiAutocomplete } from './components/MuiAutocomplete';
 import { isValidDate, MuiDatePicker } from './components/MuiDatePicker';
 import { MuiNumberField } from './components/MuiNumberField';
 import { MuiTextField } from './components/MuiTextField';
@@ -116,7 +116,7 @@ const MaterialForm = () => {
                       displayErrorMessage: true
                     }}
                     muiProps={{
-                      autoCompleteProps: {
+                      autocompleteProps: {
                         disablePortal: true,
                         options: top100Films
                       },
