@@ -19,7 +19,9 @@ type MuiNumberFieldConfig = {
 
 type MuiNumberFieldProps<T extends FieldValues> = UseControllerProps<T> & {
   config?: NumberFormatPropsBase<unknown> & MuiNumberFieldConfig;
-  muiProps?: BaseTextFieldProps;
+  muiProps?: {
+    textFieldProps?: BaseTextFieldProps;
+  };
 };
 
 const NumberFormatCustom = forwardRef<
@@ -65,14 +67,15 @@ const NumberFormatCustom = forwardRef<
 export const MuiNumberField: <T>(
   props: MuiNumberFieldProps<T>
 ) => JSX.Element = (props) => {
-  const { config, muiProps } = props;
-  const { field, fieldState } = useController(props);
+  const { muiProps, config, ...others } = props;
+  const { textFieldProps } = muiProps ?? {};
+  const { field, fieldState } = useController(others);
 
   return (
     <TextField
-      {...muiProps}
-      id={muiProps?.id}
-      label={muiProps?.label}
+      {...textFieldProps}
+      id={textFieldProps?.id}
+      label={textFieldProps?.label}
       name={field.name}
       value={field.value}
       error={!!fieldState.error}

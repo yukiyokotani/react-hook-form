@@ -6,33 +6,38 @@ import { useController, UseControllerProps } from 'react-hook-form';
 type MuiDatePickerProps<T> = UseControllerProps<T> & {
   config?: {
     displayErrorMessage?: boolean;
+  };
+  muiProps?: {
+    datePickerProps: Omit<
+      DatePickerProps,
+      'value' | 'onChange' | 'renderInput'
+    >;
     textFieldProps?: BaseTextFieldProps;
   };
-  muiProps?: Omit<DatePickerProps, 'value' | 'onChange' | 'renderInput'>;
 };
 
 export const MuiDatePicker: <T>(props: MuiDatePickerProps<T>) => JSX.Element = (
   props
 ) => {
-  const { config, muiProps } = props;
-  const { textFieldProps, ...others } = config || {};
-  const { field, fieldState } = useController(props);
+  const { muiProps, config, ...others } = props;
+  const { datePickerProps, textFieldProps } = muiProps ?? {};
+  const { field, fieldState } = useController(others);
 
   return (
     <DatePicker
-      {...muiProps}
+      {...datePickerProps}
       value={field.value}
       onChange={field.onChange}
       renderInput={(params) => (
         <TextField
+          {...textFieldProps}
           name={field.name}
           inputRef={field.ref}
           error={!!fieldState.error}
-          helperText={others?.displayErrorMessage && fieldState.error?.message}
+          helperText={config?.displayErrorMessage && fieldState.error?.message}
           onChange={field.onChange}
           onBlur={field.onBlur}
           {...params}
-          {...textFieldProps}
         />
       )}
     />

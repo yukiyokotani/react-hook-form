@@ -6,18 +6,21 @@ type MuiTextFieldProps<T> = UseControllerProps<T> & {
   config?: {
     displayErrorMessage?: boolean;
   };
-  muiProps?: BaseTextFieldProps;
+  muiProps?: {
+    textFieldProps?: BaseTextFieldProps;
+  };
 };
 
 export const MuiTextField: <T>(props: MuiTextFieldProps<T>) => JSX.Element = (
   props
 ) => {
-  const { config, muiProps } = props;
-  const { field, fieldState } = useController(props);
+  const { muiProps, config, ...others } = props;
+  const { textFieldProps } = muiProps ?? {};
+  const { field, fieldState } = useController(others);
 
   return (
     <TextField
-      {...muiProps}
+      {...textFieldProps}
       inputRef={field.ref}
       name={field.name}
       value={field.value}

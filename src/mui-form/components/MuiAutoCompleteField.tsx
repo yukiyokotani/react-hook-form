@@ -12,36 +12,39 @@ type AutocompleteOption = {
 };
 
 type MuiAutocompleteProps<T> = UseControllerProps<T> & {
-  config?: BaseTextFieldProps & {
+  config?: {
     displayErrorMessage?: boolean;
+  };
+  muiProps?: {
+    autoCompleteProps?: Omit<
+      AutocompleteProps<AutocompleteOption, undefined, undefined, undefined>,
+      'renderInput'
+    >;
     textFieldProps?: BaseTextFieldProps;
   };
-  muiProps?: Omit<
-    AutocompleteProps<AutocompleteOption, undefined, undefined, undefined>,
-    'renderInput'
-  >;
 };
 
 export const MuiAutocomplete: <T>(
   props: MuiAutocompleteProps<T>
 ) => JSX.Element = (props) => {
-  const { config, muiProps } = props;
-  const { field, fieldState } = useController(props);
+  const { muiProps, config, ...others } = props;
+  const { autoCompleteProps, textFieldProps } = muiProps ?? {};
+  const { field, fieldState } = useController(others);
 
   return (
     <Autocomplete<AutocompleteOption>
-      {...muiProps}
-      id={config?.id}
-      options={muiProps?.options ?? []}
+      {...autoCompleteProps}
+      id={autoCompleteProps?.id}
+      options={autoCompleteProps?.options ?? []}
       getOptionLabel={(option) => option.label}
       onChange={(_, value) => field.onChange(value?.label)}
       onBlur={field.onBlur}
       renderInput={(params) => (
         <TextField
           {...params}
+          {...textFieldProps}
           inputRef={field.ref}
           name={field.name}
-          label={config?.label}
           value={field.value}
           error={!!fieldState.error}
           helperText={config?.displayErrorMessage && fieldState.error?.message}

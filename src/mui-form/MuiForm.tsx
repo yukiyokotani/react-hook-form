@@ -74,8 +74,10 @@ const MaterialForm = () => {
                       displayErrorMessage: true
                     }}
                     muiProps={{
-                      label: '名前',
-                      fullWidth: true
+                      textFieldProps: {
+                        label: '名前',
+                        fullWidth: true
+                      }
                     }}
                   />
                 </Grid>
@@ -96,8 +98,10 @@ const MaterialForm = () => {
                       suffix: '円'
                     }}
                     muiProps={{
-                      label: '貯蓄額',
-                      fullWidth: true
+                      textFieldProps: {
+                        label: '貯蓄額',
+                        fullWidth: true
+                      }
                     }}
                   />
                 </Grid>
@@ -109,14 +113,16 @@ const MaterialForm = () => {
                       required: '必須項目です。'
                     }}
                     config={{
-                      displayErrorMessage: true,
+                      displayErrorMessage: true
+                    }}
+                    muiProps={{
+                      autoCompleteProps: {
+                        disablePortal: true,
+                        options: top100Films
+                      },
                       textFieldProps: {
                         label: '好きな映画'
                       }
-                    }}
-                    muiProps={{
-                      disablePortal: true,
-                      options: top100Films
                     }}
                   />
                 </Grid>
@@ -128,16 +134,18 @@ const MaterialForm = () => {
                       required: '必須項目です。'
                     }}
                     config={{
-                      displayErrorMessage: true,
+                      displayErrorMessage: true
+                    }}
+                    muiProps={{
+                      datePickerProps: {
+                        disableFuture: true,
+                        label: '誕生日',
+                        openTo: 'day',
+                        views: ['year', 'month', 'day']
+                      },
                       textFieldProps: {
                         fullWidth: true
                       }
-                    }}
-                    muiProps={{
-                      disableFuture: true,
-                      label: '誕生日',
-                      openTo: 'day',
-                      views: ['year', 'month', 'day']
                     }}
                   />
                 </Grid>
