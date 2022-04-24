@@ -20,7 +20,7 @@ import { top100Films } from './components/top100Films';
 type FormData = {
   name: string;
   assets: number;
-  movie: string;
+  film: string;
   birthday: string;
 };
 
@@ -107,7 +107,7 @@ const MaterialForm = () => {
                 </Grid>
                 <Grid item xs={12} md={6} lg={4}>
                   <MuiAutocomplete<FormData>
-                    name='movie'
+                    name='film'
                     control={control}
                     rules={{
                       required: '必須項目です。'
@@ -127,7 +127,7 @@ const MaterialForm = () => {
                   />
                 </Grid>
                 <Grid item xs={12} md={6} lg={4}>
-                  <MuiDatePicker<FormData>
+                  <MuiDatePicker<FormData, 'birthday'>
                     name='birthday'
                     control={control}
                     rules={{

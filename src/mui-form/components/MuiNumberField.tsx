@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import { forwardRef } from 'react';
 import {
+  FieldPath,
   FieldValues,
   useController,
   UseControllerProps
@@ -31,7 +32,10 @@ type MuiNumberFieldConfig = {
   valueType?: 'FLOAT' | 'STRING' | 'FORMATTED_STRING';
 };
 
-type MuiNumberFieldProps<T extends FieldValues> = UseControllerProps<T> & {
+type MuiNumberFieldProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> = UseControllerProps<TFieldValues, TName> & {
   /** Additional settings */
   config?: NumberFormatPropsBase<unknown> & MuiNumberFieldConfig;
   /** Settings for MUI elements */
@@ -89,14 +93,17 @@ const NumberFormatCustom = forwardRef<
 });
 
 /**
- *  MUI TextField component linked to React Hook Form and react-number-format.
+ * MUI TextField component linked to React Hook Form and react-number-format.
+ * Type arguments are optional, but specifying them provides powerful type checking and type inference.
+ * @typeParam TFieldValues - Type of the form.
+ * @typeParam TName - Field name.
  * @example
  * ```
  * type FormData = {
  *   assets: number;
  * };
  *
- * <MuiNumberField<FormData>
+ * <MuiNumberField<FormData, 'assets'>
  *   name='assets'
  *   control={control}
  *   rules={{
@@ -120,8 +127,11 @@ const NumberFormatCustom = forwardRef<
  * />
  * ```
  */
-export const MuiNumberField: <T>(
-  props: MuiNumberFieldProps<T>
+export const MuiNumberField: <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>(
+  props: MuiNumberFieldProps<TFieldValues, TName>
 ) => JSX.Element = (props) => {
   const { muiProps, config, ...others } = props;
   const { textFieldProps } = muiProps ?? {};

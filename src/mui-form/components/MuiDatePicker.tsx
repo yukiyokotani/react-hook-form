@@ -3,7 +3,12 @@ import { BaseTextFieldProps, TextField } from '@mui/material';
 import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
 import { parseISO } from 'date-fns';
 import { useCallback } from 'react';
-import { useController, UseControllerProps } from 'react-hook-form';
+import {
+  FieldPath,
+  FieldValues,
+  useController,
+  UseControllerProps
+} from 'react-hook-form';
 
 /** Determine if the date is valid. If valid, retrun `true`. */
 export const isValidDate = (date: Date | string | number) => {
@@ -18,7 +23,10 @@ export const isValidDate = (date: Date | string | number) => {
   return false;
 };
 
-type MuiDatePickerProps<T> = UseControllerProps<T> & {
+type MuiDatePickerProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> = UseControllerProps<TFieldValues, TName> & {
   /** Additional settings */
   config?: {
     /**
@@ -49,14 +57,17 @@ type MuiDatePickerProps<T> = UseControllerProps<T> & {
 };
 
 /**
- *  MUI DatePicker component linked to React Hook Form.
+ * MUI DatePicker component linked to React Hook Form.
+ * Type arguments are optional, but specifying them provides powerful type checking and type inference.
+ * @typeParam TFieldValues - Type of the form.
+ * @typeParam TName - Field name.
  * @example
  * ```
  * type FormData = {
  *   birthday: string;
  * };
  *
- * <MuiDatePicker<FormData>
+ * <MuiDatePicker<FormData, 'birthday'>
  *   name='birthday'
  *   control={control}
  *   rules={{
@@ -80,9 +91,12 @@ type MuiDatePickerProps<T> = UseControllerProps<T> & {
  * />
  * ```
  */
-export const MuiDatePicker: <T>(props: MuiDatePickerProps<T>) => JSX.Element = (
-  props
-) => {
+export const MuiDatePicker: <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>(
+  props: MuiDatePickerProps<TFieldValues, TName>
+) => JSX.Element = (props) => {
   const { muiProps, config, ...others } = props;
   const { datePickerProps, textFieldProps } = muiProps ?? {};
   const { field, fieldState } = useController(others);

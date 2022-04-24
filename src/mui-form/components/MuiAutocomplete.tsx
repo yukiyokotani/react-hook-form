@@ -5,13 +5,21 @@ import {
   BaseTextFieldProps,
   TextField
 } from '@mui/material';
-import { useController, UseControllerProps } from 'react-hook-form';
+import {
+  FieldPath,
+  FieldValues,
+  useController,
+  UseControllerProps
+} from 'react-hook-form';
 
 type AutocompleteOption = {
   label: string;
 };
 
-type MuiAutocompleteProps<T> = UseControllerProps<T> & {
+type MuiAutocompleteProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> = UseControllerProps<TFieldValues, TName> & {
   /** Additional settings */
   config?: {
     /**
@@ -42,18 +50,21 @@ type MuiAutocompleteProps<T> = UseControllerProps<T> & {
 };
 
 /**
- *  MUI Autocomplete component linked to React Hook Form.
+ * MUI Autocomplete component linked to React Hook Form.
+ * Type arguments are optional, but specifying them provides powerful type checking and type inference.
+ * @typeParam TFieldValues - Type of the form.
+ * @typeParam TName - Field name.
  * @example
  * ```
  * type FormData = {
  *   film: string;
  * };
  *
- * <MuiAutocomplete<FormData>
- *   name='movie'
+ * <MuiAutocomplete<FormData, 'film'>
+ *   name='film'
  *   control={control}
  *   rules={{
- *     required: 'Enter your favorite film.A'
+ *     required: 'Enter your favorite film.'
  *   }}
  *   config={{
  *     displayErrorMessage: true
@@ -74,8 +85,11 @@ type MuiAutocompleteProps<T> = UseControllerProps<T> & {
  * />
  * ```
  */
-export const MuiAutocomplete: <T>(
-  props: MuiAutocompleteProps<T>
+export const MuiAutocomplete: <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>(
+  props: MuiAutocompleteProps<TFieldValues, TName>
 ) => JSX.Element = (props) => {
   const { muiProps, config, ...others } = props;
   const { autocompleteProps, textFieldProps } = muiProps ?? {};

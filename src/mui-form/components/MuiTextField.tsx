@@ -1,8 +1,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { TextField, BaseTextFieldProps } from '@mui/material';
-import { useController, UseControllerProps } from 'react-hook-form';
+import {
+  FieldPath,
+  FieldValues,
+  useController,
+  UseControllerProps
+} from 'react-hook-form';
 
-type MuiTextFieldProps<T> = UseControllerProps<T> & {
+type MuiTextFieldProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> = UseControllerProps<TFieldValues, TName> & {
   /** Additional settings */
   config?: {
     /**
@@ -24,14 +32,17 @@ type MuiTextFieldProps<T> = UseControllerProps<T> & {
 };
 
 /**
- *  MUI TextField component linked to React Hook Form.
+ * MUI TextField component linked to React Hook Form.
+ * Type arguments are optional, but specifying them provides powerful type checking and type inference.
+ * @typeParam TFieldValues - Type of the form.
+ * @typeParam TName - Field name.
  * @example
  * ```
  * type FormData = {
  *   username: string;
  * };
  *
- * <MuiTextField<FormData>
+ * <MuiTextField<FormData, 'username'>
  *   name='username'
  *   control={control}
  *   rules={{
@@ -53,9 +64,12 @@ type MuiTextFieldProps<T> = UseControllerProps<T> & {
  * />
  * ```
  */
-export const MuiTextField: <T>(props: MuiTextFieldProps<T>) => JSX.Element = (
-  props
-) => {
+export const MuiTextField: <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>(
+  props: MuiTextFieldProps<TFieldValues, TName>
+) => JSX.Element = (props) => {
   const { muiProps, config, ...others } = props;
   const { textFieldProps } = muiProps ?? {};
   const { field, fieldState } = useController(others);
