@@ -161,8 +161,12 @@ const MaterialForm = () => {
         </Card>
       </Grid>
       <Grid item xs={12}>
-        <p>isDirty: {String(isDirty)}</p>
-        <p>isSubmitted: {String(isSubmitted)}</p>
+        <Card>
+          <CardContent>
+            <p>isDirty: {String(isDirty)}</p>
+            <p>isSubmitted: {String(isSubmitted)}</p>
+          </CardContent>
+        </Card>
       </Grid>
     </Grid>
   );
