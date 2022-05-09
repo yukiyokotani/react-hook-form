@@ -76,12 +76,12 @@ const NumberFormatCustom = forwardRef<
             value = values.formattedValue;
             break;
           default:
-            value = values.floatValue;
+            value = values.floatValue ?? 0;
         }
         const event = {
           ...sourceInfo.event,
           target: {
-            ...sourceInfo.event.target,
+            ...sourceInfo.event?.target,
             name: props.name,
             value
           }
@@ -140,8 +140,6 @@ export const MuiNumberField: <
   return (
     <TextField
       {...textFieldProps}
-      id={textFieldProps?.id}
-      label={textFieldProps?.label}
       name={field.name}
       value={field.value}
       error={!!fieldState.error}
