@@ -12,6 +12,7 @@ import { useCallback } from 'react';
 import { FieldErrors, useForm, useFormState } from 'react-hook-form';
 
 import { MuiAutocomplete } from './components/MuiAutocomplete';
+import { MuiCheckbox } from './components/MuiCheckbox';
 import { isValidDate, MuiDatePicker } from './components/MuiDatePicker';
 import { MuiNumberField } from './components/MuiNumberField';
 import { MuiTextField } from './components/MuiTextField';
@@ -22,13 +23,15 @@ type FormData = {
   assets: number;
   film: string;
   birthday: string;
+  check: boolean;
 };
 
 const MaterialForm = () => {
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
       name: '',
-      birthday: ''
+      birthday: '',
+      check: false
     },
     // onSubmit modeの場合、formStateのisValidは適切な値とならないことに注意
     mode: 'onSubmit'
@@ -147,6 +150,26 @@ const MaterialForm = () => {
                       textFieldProps: {
                         fullWidth: true
                       }
+                    }}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  md={6}
+                  lg={4}
+                  display='flex'
+                  alignItems='center'
+                >
+                  <MuiCheckbox<FormData, 'check'>
+                    name='check'
+                    control={control}
+                    rules={{
+                      required: '必須項目です。'
+                    }}
+                    config={{
+                      displayErrorMessage: true,
+                      label: 'チェックボックス'
                     }}
                   />
                 </Grid>
