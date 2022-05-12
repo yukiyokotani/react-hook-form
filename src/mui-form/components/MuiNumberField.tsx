@@ -67,7 +67,7 @@ const NumberFormatCustom = forwardRef<
       getInputRef={ref}
       onValueChange={(values, sourceInfo) => {
         if (!onChange) return;
-        let value: string | number | undefined | null;
+        let value: string | number | undefined;
         switch (valueType) {
           case 'STRING':
             value = values.value;
@@ -76,7 +76,7 @@ const NumberFormatCustom = forwardRef<
             value = values.formattedValue;
             break;
           default:
-            value = values.floatValue ?? null;
+            value = values.floatValue ?? undefined;
         }
         const event = {
           ...sourceInfo.event,
