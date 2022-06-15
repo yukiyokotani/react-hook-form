@@ -44,7 +44,7 @@ type MuiDatePickerProps<
      * API: {@link https://mui.com/x/api/date-pickers/date-picker/}
      */
     datePickerProps: Omit<
-      DatePickerProps,
+      DatePickerProps<unknown, unknown>,
       'value' | 'onChange' | 'renderInput'
     >;
     /**
