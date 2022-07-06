@@ -28,6 +28,11 @@ type MuiAutocompleteProps<
      * @defaultValue `false`
      */
     displayErrorMessage?: boolean;
+    /**
+     * Whether to manage value with label string.
+     * @defaultValue `false`
+     */
+    manageWithLabel?: boolean;
   };
   /** Settings for MUI elements */
   muiProps?: {
@@ -101,7 +106,9 @@ export const MuiAutocomplete: <
       id={autocompleteProps?.id}
       options={autocompleteProps?.options ?? []}
       getOptionLabel={(option) => option.label}
-      onChange={(_, value) => field.onChange(value?.label)}
+      onChange={(_, value) =>
+        field.onChange(config?.manageWithLabel ? value?.label : value)
+      }
       onBlur={field.onBlur}
       renderInput={(params) => (
         <TextField

@@ -118,7 +118,8 @@ const MaterialForm = () => {
                       required: '必須項目です。'
                     }}
                     config={{
-                      displayErrorMessage: true
+                      displayErrorMessage: true,
+                      manageWithLabel: true
                     }}
                     muiProps={{
                       autocompleteProps: {
