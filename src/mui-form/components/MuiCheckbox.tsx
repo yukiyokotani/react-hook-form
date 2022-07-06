@@ -28,8 +28,8 @@ type MuiCheckboxProps<
     /** Label for the checkbox. */
     label?: string;
     /**
-     * If pass configuration, form value is managed by a string value insted of boolean.
-     * Note the validation logic for value required.
+     * If pass object that define `trueValue` and `falseValue`,
+     * form value is managed by the configured value instead of `true` or `false`.
      */
     manageWithOtherValue?: {
       trueValue: string | number;

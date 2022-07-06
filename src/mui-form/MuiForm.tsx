@@ -9,20 +9,23 @@ import {
   Typography
 } from '@mui/material';
 import { useCallback } from 'react';
-import { FieldErrors, useForm, useFormState } from 'react-hook-form';
+import { FieldErrors, useForm } from 'react-hook-form';
+
+import { top100Films } from '../dummy-data/top100Films';
 
 import { MuiAutocomplete } from './components/MuiAutocomplete';
 import { MuiCheckbox } from './components/MuiCheckbox';
 import { isValidDate, MuiDatePicker } from './components/MuiDatePicker';
 import { MuiNumberField } from './components/MuiNumberField';
+import { MuiSelect } from './components/MuiSelect';
 import { MuiTextField } from './components/MuiTextField';
-import { top100Films } from './components/top100Films';
 
 type FormData = {
   name: string;
-  assets: number;
+  assets: number | null;
   film: string;
   birthday: string;
+  menu: string;
   check: boolean;
 };
 
@@ -30,15 +33,14 @@ const MaterialForm = () => {
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
       name: '',
+      assets: null,
+      film: '',
       birthday: '',
+      menu: '',
       check: false
     },
     // onSubmit modeの場合、formStateのisValidは適切な値とならないことに注意
     mode: 'onSubmit'
-  });
-
-  const { isDirty, isSubmitted } = useFormState({
-    control
   });
 
   const onSubmit = useCallback((data: FormData) => {
@@ -98,7 +100,7 @@ const MaterialForm = () => {
                     config={{
                       displayErrorMessage: true,
                       thousandSeparator: true,
-                      suffix: '円'
+                      prefix: '¥'
                     }}
                     muiProps={{
                       textFieldProps: {
@@ -153,6 +155,38 @@ const MaterialForm = () => {
                     }}
                   />
                 </Grid>
+                <Grid item xs={12} md={6} lg={4}>
+                  <MuiSelect<FormData, 'menu'>
+                    name='menu'
+                    control={control}
+                    rules={{
+                      required: '必須項目です。'
+                    }}
+                    config={{
+                      displayErrorMessage: true,
+                      options: [
+                        {
+                          label: 'Beef',
+                          value: 0
+                        },
+                        {
+                          label: 'Pork',
+                          value: 1
+                        },
+                        {
+                          label: 'Chicken',
+                          value: 2
+                        }
+                      ]
+                    }}
+                    muiProps={{
+                      selectProps: {
+                        label: 'メニュー',
+                        fullWidth: true
+                      }
+                    }}
+                  />
+                </Grid>
                 <Grid
                   item
                   xs={12}
@@ -181,14 +215,6 @@ const MaterialForm = () => {
               </Button>
             </CardActions>
           </form>
-        </Card>
-      </Grid>
-      <Grid item xs={12}>
-        <Card>
-          <CardContent>
-            <p>isDirty: {String(isDirty)}</p>
-            <p>isSubmitted: {String(isSubmitted)}</p>
-          </CardContent>
         </Card>
       </Grid>
     </Grid>
