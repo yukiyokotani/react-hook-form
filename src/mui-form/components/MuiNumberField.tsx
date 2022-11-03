@@ -150,7 +150,9 @@ export const MuiNumberField: <
         inputComponent: NumberFormatCustom,
         inputProps: {
           ...field,
-          ...config
+          ...config,
+          defaultValue:
+            config?.defaultValue !== null ? config?.defaultValue : undefined
         }
       }}
     />
