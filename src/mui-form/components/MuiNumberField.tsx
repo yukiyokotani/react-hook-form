@@ -11,7 +11,7 @@ import {
   useController,
   UseControllerProps
 } from 'react-hook-form';
-import NumberFormat, { NumberFormatPropsBase } from 'react-number-format';
+import { NumericFormat, NumericFormatProps } from 'react-number-format';
 
 type MuiNumberFieldConfig = {
   /**
@@ -37,7 +37,7 @@ type MuiNumberFieldProps<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > = UseControllerProps<TFieldValues, TName> & {
   /** Additional settings */
-  config?: NumberFormatPropsBase<unknown> & MuiNumberFieldConfig;
+  config?: NumericFormatProps<unknown> & MuiNumberFieldConfig;
   /** Settings for MUI elements */
   muiProps?: {
     /**
@@ -62,11 +62,11 @@ const NumberFormatCustom = forwardRef<
     props;
 
   return (
-    <NumberFormat
+    <NumericFormat
       {...others}
       getInputRef={ref}
       onValueChange={(values, sourceInfo) => {
-        if (!onChange) return;
+        if (!onChange || !sourceInfo.event) return;
         let value: string | number | undefined | null;
         switch (valueType) {
           case 'STRING':
@@ -81,7 +81,7 @@ const NumberFormatCustom = forwardRef<
         const event = {
           ...sourceInfo.event,
           target: {
-            ...sourceInfo.event?.target,
+            ...sourceInfo.event.target,
             name: props.name,
             value
           }
