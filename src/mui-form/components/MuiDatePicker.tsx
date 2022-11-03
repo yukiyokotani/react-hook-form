@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { BaseTextFieldProps, TextField } from '@mui/material';
 import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
-import { parseISO } from 'date-fns';
+import { DateTime } from 'luxon';
 import { useCallback } from 'react';
 import {
   FieldPath,
@@ -17,8 +17,9 @@ export const isValidDate = (date: Date | string | number) => {
     return !Number.isNaN(date.getTime());
   }
   if (typeof date === 'string') {
-    // Check parsed date is same as original. (reject a date like Feb. 29)
-    return parseISO(date).toISOString() === date;
+    // Check parsed date is same as original. (reject a date like Feb. 29, 2022)
+    const dateTime = DateTime.fromISO(date);
+    return dateTime.isValid;
   }
   return false;
 };
@@ -103,12 +104,10 @@ export const MuiDatePicker: <
 
   const onChangeHandler = useCallback(
     (date: unknown) => {
-      if (date instanceof Date && isValidDate(date)) {
-        field.onChange(date.toISOString());
-      } else if (date !== null) {
-        field.onChange(date);
+      if (date instanceof DateTime && date.isValid) {
+        field.onChange(date.toISO());
       } else {
-        field.onChange('');
+        field.onChange('invalid');
       }
     },
     [field]
@@ -118,7 +117,9 @@ export const MuiDatePicker: <
     <DatePicker
       {...datePickerProps}
       ref={field.ref}
-      value={field.value}
+      value={DateTime.fromISO(field.value).toFormat('yyyy/MM/dd')}
+      inputFormat='yyyy/MM/dd'
+      mask='____/__/__'
       onChange={onChangeHandler}
       renderInput={(params) => (
         <TextField
