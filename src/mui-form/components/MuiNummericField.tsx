@@ -13,7 +13,7 @@ import {
 } from 'react-hook-form';
 import { NumericFormat, NumericFormatProps } from 'react-number-format';
 
-type MuiNumberFieldConfig = {
+type MuiNumericFieldConfig = {
   /**
    * Whether to display error messages below the input field.
    * If `true`, message displays.
@@ -32,12 +32,12 @@ type MuiNumberFieldConfig = {
   valueType?: 'FLOAT' | 'STRING' | 'FORMATTED_STRING';
 };
 
-type MuiNumberFieldProps<
+type MuiNumericFieldProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > = UseControllerProps<TFieldValues, TName> & {
   /** Additional settings */
-  config?: NumericFormatProps<unknown> & MuiNumberFieldConfig;
+  config?: NumericFormatProps<unknown> & MuiNumericFieldConfig;
   /** Settings for MUI elements */
   muiProps?: {
     /**
@@ -54,7 +54,7 @@ type MuiNumberFieldProps<
  */
 const NumberFormatCustom = forwardRef<
   HTMLInputElement,
-  InputBaseComponentProps & MuiNumberFieldConfig
+  InputBaseComponentProps & MuiNumericFieldConfig
 >((props, ref) => {
   // 不要なプロパティを除くためdestructureする
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -103,7 +103,7 @@ const NumberFormatCustom = forwardRef<
  *   assets: number;
  * };
  *
- * <MuiNumberField<FormData, 'assets'>
+ * <MuiNumericField<FormData, 'assets'>
  *   name='assets'
  *   control={control}
  *   rules={{
@@ -127,11 +127,11 @@ const NumberFormatCustom = forwardRef<
  * />
  * ```
  */
-export const MuiNumberField: <
+export const MuiNumericField: <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >(
-  props: MuiNumberFieldProps<TFieldValues, TName>
+  props: MuiNumericFieldProps<TFieldValues, TName>
 ) => JSX.Element = (props) => {
   const { muiProps, config, ...others } = props;
   const { textFieldProps } = muiProps ?? {};

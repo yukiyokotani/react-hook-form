@@ -16,7 +16,7 @@ import { top100Films } from '../dummy-data/top100Films';
 import { MuiAutocomplete } from './components/MuiAutocomplete';
 import { MuiCheckbox } from './components/MuiCheckbox';
 import { isValidDate, MuiDatePicker } from './components/MuiDatePicker';
-import { MuiNumberField } from './components/MuiNumberField';
+import { MuiNumericField } from './components/MuiNummericField';
 import { MuiSelect } from './components/MuiSelect';
 import { MuiTextField } from './components/MuiTextField';
 
@@ -87,7 +87,7 @@ const MaterialForm = () => {
                   />
                 </Grid>
                 <Grid item xs={12} md={6} lg={4}>
-                  <MuiNumberField<FormData>
+                  <MuiNumericField<FormData>
                     name='assets'
                     control={control}
                     rules={{
