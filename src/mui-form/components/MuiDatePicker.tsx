@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { BaseTextFieldProps, TextField } from '@mui/material';
+import { TextFieldProps, TextField } from '@mui/material';
 import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
 import { parseISO } from 'date-fns';
 import { useCallback } from 'react';
@@ -52,7 +52,7 @@ type MuiDatePickerProps<
      *
      * API: {@link https://mui.com/material-ui/api/text-field/}
      */
-    textFieldProps?: BaseTextFieldProps;
+    textFieldProps?: TextFieldProps;
   };
 };
 

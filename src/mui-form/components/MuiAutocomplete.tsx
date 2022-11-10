@@ -2,7 +2,7 @@
 import {
   Autocomplete,
   AutocompleteProps,
-  BaseTextFieldProps,
+  TextFieldProps,
   TextField
 } from '@mui/material';
 import {
@@ -50,7 +50,7 @@ type MuiAutocompleteProps<
      *
      * API: {@link https://mui.com/material-ui/api/text-field/}
      */
-    textFieldProps?: BaseTextFieldProps;
+    textFieldProps?: TextFieldProps;
   };
 };
 

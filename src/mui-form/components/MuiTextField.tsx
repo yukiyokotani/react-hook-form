@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { TextField, BaseTextFieldProps } from '@mui/material';
+import { TextField, TextFieldProps } from '@mui/material';
 import {
   FieldPath,
   FieldValues,
@@ -27,7 +27,7 @@ type MuiTextFieldProps<
      *
      * API: {@link https://mui.com/material-ui/api/text-field/}
      */
-    textFieldProps?: BaseTextFieldProps;
+    textFieldProps?: TextFieldProps;
   };
 };
 

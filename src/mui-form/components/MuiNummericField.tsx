@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import {
-  BaseTextFieldProps,
+  TextFieldProps,
   InputBaseComponentProps,
   TextField
 } from '@mui/material';
@@ -45,7 +45,7 @@ type MuiNumericFieldProps<
      *
      * API: {@link https://mui.com/material-ui/api/text-field/}
      */
-    textFieldProps?: BaseTextFieldProps;
+    textFieldProps?: TextFieldProps;
   };
 };
 
