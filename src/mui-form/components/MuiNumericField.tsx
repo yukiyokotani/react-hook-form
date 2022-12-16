@@ -79,7 +79,7 @@ const NumberFormatCustom = forwardRef<
             value = values.floatValue ?? null;
         }
         const event = {
-          ...sourceInfo.event,
+          ...(sourceInfo.event as React.SyntheticEvent<HTMLInputElement>),
           target: {
             ...sourceInfo.event.target,
             name: props.name,
