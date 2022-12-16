@@ -16,7 +16,7 @@ import { top100Films } from '../dummy-data/top100Films';
 import { MuiAutocomplete } from './components/MuiAutocomplete';
 import { MuiCheckbox } from './components/MuiCheckbox';
 import { isValidDate, MuiDatePicker } from './components/MuiDatePicker';
-import { MuiNumericField } from './components/MuiNummericField';
+import { MuiNumericField } from './components/MuiNumericField';
 import { MuiSelect } from './components/MuiSelect';
 import { MuiTextField } from './components/MuiTextField';
 
